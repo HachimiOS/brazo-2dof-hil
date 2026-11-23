@@ -10,7 +10,7 @@ Modelo en **Simulink** (`simulink/ProyectoSimulinkV1.slx`) configurado para **ES
 * `cad/`: Modelos 3D (`.stl`) de los eslabones y piezas mecánicas del manipulador.
 * `docs/esquematico.png`: Esquemático de conexión de referencia entre ESP32, puente H y motorreductores.
 
-## 🏗️ Arquitectura del Modelo (`ProyectoSimulinkV1.slx`)
+## 🏗️ Arquitectura del Modelo 
 
 El modelo opera en tiempo discreto (`FixedStepDiscrete`) con paso de muestreo `dt = 0.01 s` sobre **ESP32-WROOM**:
 
@@ -18,7 +18,7 @@ El modelo opera en tiempo discreto (`FixedStepDiscrete`) con paso de muestreo `d
 * **Lógica de control (`ControladorRobot`):** Bloque `MATLAB Function` que recibe `cuentas1`, `cuentas2`, `modo`, `q1_d`, `q2_d`, `x_d`, `y_d` y `Ejecutar`, generando `pwm1`, `dir1_A`, `dir1_B`, `pwm2`, `dir2_A`, `dir2_B`, `q1_deseado` y `q2_deseado`.
 * **Actuación y monitoreo:** Envía PWM a `1000 Hz` (`GPIO5` y `GPIO27`) y señales de dirección (`GPIO4, 2, 25, 26`) al driver, mientras muestra posición deseada vs. real en grados en los bloques `Scope` (`Articulacion 1` y `Articulacion 2`).
 
-## 🎮 Qué poner para mover el brazo
+## 🎮 Como mover el brazo mediante simulink
 
 1. **Habilitar la consigna (`Ejecutar = 1`):** El bloque retiene las metas en memoria persistente cuando `Ejecutar == 0` y actualiza `meta_q1`, `meta_q2`, `meta_x`, `meta_y` cuando `Ejecutar == 1`.
 2. **Seleccionar `modo` y metas:**
@@ -26,7 +26,7 @@ El modelo opera en tiempo discreto (`FixedStepDiscrete`) con paso de muestreo `d
    * **`modo = 2` o `modo = 4` (Operacional):** Define `x_d` y `y_d` en metros dentro del espacio de trabajo (`a1 = 0.160 m`, `a2 = 0.155 m`). `modo = 4` activa compensación de gravedad ($g = 9.81\text{ m/s}^2$).
 3. **Energía y comunicación:** Verifica el puerto `COM` del ESP32, la alimentación de potencia (`~12 V`, $V_{\max} = 12.27\text{ V}$) y el **GND común** antes de iniciar la ejecución.
 
-## 🧠 Estrategias de Control (`ControladorRobot`)
+## 🧠 Estrategias de Control 
 
 El bloque `ControladorRobot` implementa control **PD con compensación de gravedad** en dos espacios de trabajo, seleccionables mediante la entrada `modo` (la gravedad $g = 9.81\text{ m/s}^2$ se activa cuando `modo == 3` o `modo == 4`):
 
