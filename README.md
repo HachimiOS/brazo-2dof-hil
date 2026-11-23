@@ -2,13 +2,13 @@
 
 Modelo en **Simulink** (`simulink/ProyectoSimulinkV1.slx`) configurado para **ESP32-WROOM** (`dt = 0.01 s`, PWM a `1000 Hz`) junto con los modelos 3D (`.stl`) y el esquemático de referencia del montaje físico.
 
-![Esquemático del brazo 2-DOF HIL](docs/esquematico_2dof_hil.png)
+![Esquemático del brazo 2-DOF HIL](docs/esquematico.png)
 
 ## 📂 Estructura del proyecto
 
 * `simulink/ProyectoSimulinkV1.slx`: Modelo HIL completo con lectura de encoders en cuadratura, salidas PWM/dirección y bloque embebido `ControladorRobot`.
 * `cad/`: Modelos 3D (`.stl`) de los eslabones y piezas mecánicas del manipulador.
-* `docs/esquematico_2dof_hil.png`: Esquemático de conexión de referencia entre ESP32, puente H y motorreductores.
+* `docs/esquematico.png`: Esquemático de conexión de referencia entre ESP32, puente H y motorreductores.
 
 ## 🏗️ Arquitectura del Modelo (`ProyectoSimulinkV1.slx`)
 
