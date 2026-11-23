@@ -2,11 +2,13 @@
 
 Modelo en **Simulink** (`simulink/ProyectoSimulinkV1.slx`) configurado para **ESP32-WROOM** (`dt = 0.01 s`, PWM a `1000 Hz`) junto con los modelos 3D (`.stl`) y el esquemático de referencia del montaje físico.
 
+![Esquemático del brazo 2-DOF HIL](docs/esquematico_2dof_hil.png)
+
 ## 📂 Estructura del proyecto
 
 * `simulink/ProyectoSimulinkV1.slx`: Modelo HIL completo con lectura de encoders en cuadratura, salidas PWM/dirección y bloque embebido `ControladorRobot`.
 * `cad/`: Modelos 3D (`.stl`) de los eslabones y piezas mecánicas del manipulador.
-* `docs/esquematico.png`: Esquemático de conexión de referencia entre ESP32, puente H y motorreductores.
+* `docs/esquematico_2dof_hil.png`: Esquemático de conexión de referencia entre ESP32, puente H y motorreductores.
 
 ## 🏗️ Arquitectura del Modelo (`ProyectoSimulinkV1.slx`)
 
@@ -32,7 +34,7 @@ El bloque `ControladorRobot` implementa control **PD con compensación de graved
 
    $$\tau = K_p e - K_d \dot{q} + g(q)$$
 
-   * **Ganancias:** $K_p = \operatorname{diag}(0.09, 0.16)$, $K_d = \operatorname{diag}(0.04, 0.03)$.
+   * **Ganancias:** $K_p = \mathrm{diag}(0.09, 0.16)$, $K_d = \mathrm{diag}(0.04, 0.03)$.
    * **Zona muerta:** $|e_i| < 0.055\text{ rad}$ para evitar vibraciones en estado estacionario.
 
 2. **Control en Espacio Operacional / Cartesiano (`modo == 2` o `modo == 4`):**
@@ -40,7 +42,7 @@ El bloque `ControladorRobot` implementa control **PD con compensación de graved
    $$\tau = J(q)^T \left( K_{p,\text{op}} e_x - K_{d,\text{op}} J(q) \dot{q} \right) + g(q)$$
 
    * Calcula la cinemática inversa en configuración de **codo abajo** a partir de $(x_d, y_d)$ y mapea las fuerzas cartesianas mediante el Jacobiano transpuesto $J(q)^T$.
-   * **Ganancias:** $K_{p,\text{op}} = \operatorname{diag}(4.0, 3.5)$, $K_{d,\text{op}} = \operatorname{diag}(0.6, 0.6)$.
+   * **Ganancias:** $K_{p,\text{op}} = \mathrm{diag}(4.0, 3.5)$, $K_{d,\text{op}} = \mathrm{diag}(0.6, 0.6)$.
    * **Zona muerta:** $\|e_x\| < 0.015\text{ m}$ ($1.5\text{ cm}$).
 
 3. **Etapa de Actuación (Torque a Voltaje / PWM):**
