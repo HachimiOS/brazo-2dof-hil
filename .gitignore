@@ -1,0 +1,17 @@
+﻿# Archivos temporales y de respaldo de MATLAB / Simulink
+*.asv
+*.slxc
+*.slx.*
+*.autosave
+*.mex*
+
+# Carpetas y archivos generados al compilar para ESP32 / Simulink Coder
+slprj/
+*_ert_rtw/
+*.bin
+*.elf
+*.map
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
